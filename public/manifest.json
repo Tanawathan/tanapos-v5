@@ -1,0 +1,49 @@
+{
+  "name": "TanaPOS V4-Mini",
+  "short_name": "TanaPOS",
+  "description": "專業餐廳POS點餐管理系統 - 支援離線使用",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#ffffff",
+  "theme_color": "#4f46e5",
+  "categories": ["business", "productivity", "food"],
+  "lang": "zh-TW",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "新訂單",
+      "short_name": "新訂單",
+      "description": "快速建立新訂單",
+      "url": "/?action=new-order",
+      "icons": [{ "src": "/icons/new-order.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "廚房顯示",
+      "short_name": "廚房",
+      "description": "開啟廚房顯示系統",
+      "url": "/?page=kds",
+      "icons": [{ "src": "/icons/kitchen.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "桌位管理",
+      "short_name": "桌位",
+      "description": "管理餐廳桌位",
+      "url": "/?page=tables",
+      "icons": [{ "src": "/icons/tables.png", "sizes": "96x96" }]
+    }
+  ],
+  "prefer_related_applications": false,
+  "edge_side_panel": {
+    "preferred_width": 400
+  }
+}

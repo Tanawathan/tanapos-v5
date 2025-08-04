@@ -1,0 +1,216 @@
+import React, { createContext, useContext, useEffect, useState } from 'react'
+
+// 主題類型定義
+export type Theme = 'light' | 'dark' | 'high-contrast'
+
+// 樣式配置接口
+export interface UIStyleConfig {
+  theme: Theme
+  fontSize: 'small' | 'normal' | 'large'
+  borderRadius: 'none' | 'small' | 'normal' | 'large'
+  animations: boolean
+  highContrast: boolean
+}
+
+// 上下文類型
+interface UIStyleContextType {
+  config: UIStyleConfig
+  updateConfig: (updates: Partial<UIStyleConfig>) => void
+  setTheme: (theme: Theme) => void
+  toggleTheme: () => void
+  resetToDefaults: () => void
+}
+
+// 默認配置
+const defaultConfig: UIStyleConfig = {
+  theme: 'light',
+  fontSize: 'normal',
+  borderRadius: 'normal',
+  animations: true,
+  highContrast: false,
+}
+
+// 創建上下文
+const UIStyleContext = createContext<UIStyleContextType | undefined>(undefined)
+
+// 本地存儲鍵名
+const STORAGE_KEY = 'tanapos-ui-style-config'
+
+// Provider 組件
+export const UIStyleProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [config, setConfig] = useState<UIStyleConfig>(() => {
+    // 從 localStorage 讀取配置
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY)
+      return saved ? { ...defaultConfig, ...JSON.parse(saved) } : defaultConfig
+    } catch {
+      return defaultConfig
+    }
+  })
+
+  // 更新配置
+  const updateConfig = (updates: Partial<UIStyleConfig>) => {
+    setConfig(prev => {
+      const newConfig = { ...prev, ...updates }
+      // 保存到 localStorage
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(newConfig))
+      } catch (error) {
+        console.warn('Failed to save UI config to localStorage:', error)
+      }
+      return newConfig
+    })
+  }
+
+  // 設置主題
+  const setTheme = (theme: Theme) => {
+    updateConfig({ theme })
+  }
+
+  // 切換主題
+  const toggleTheme = () => {
+    const themes: Theme[] = ['light', 'dark', 'high-contrast']
+    const currentIndex = themes.indexOf(config.theme)
+    const nextTheme = themes[(currentIndex + 1) % themes.length]
+    setTheme(nextTheme)
+  }
+
+  // 重置為默認值
+  const resetToDefaults = () => {
+    setConfig(defaultConfig)
+    try {
+      localStorage.removeItem(STORAGE_KEY)
+    } catch (error) {
+      console.warn('Failed to remove UI config from localStorage:', error)
+    }
+  }
+
+  // 應用樣式到 DOM
+  useEffect(() => {
+    const root = document.documentElement
+
+    // 設置主題屬性
+    root.setAttribute('data-theme', config.theme)
+
+    // 設置字體大小類別
+    const fontSizeClasses = {
+      small: 'text-sm',
+      normal: 'text-base',
+      large: 'text-lg'
+    }
+    root.className = root.className.replace(/text-(sm|base|lg)/g, '')
+    root.classList.add(fontSizeClasses[config.fontSize])
+
+    // 設置圓角樣式
+    const radiusValues = {
+      none: '0',
+      small: 'var(--radius-sm)',
+      normal: 'var(--radius-md)',
+      large: 'var(--radius-lg)'
+    }
+    root.style.setProperty('--current-radius', radiusValues[config.borderRadius])
+
+    // 設置動畫偏好
+    if (!config.animations) {
+      root.style.setProperty('--animation-duration-fast', '0ms')
+      root.style.setProperty('--animation-duration-normal', '0ms')
+      root.style.setProperty('--animation-duration-slow', '0ms')
+    }
+
+    // 高對比模式
+    if (config.highContrast) {
+      root.setAttribute('data-high-contrast', 'true')
+    } else {
+      root.removeAttribute('data-high-contrast')
+    }
+
+    // 設置 CSS 變數給 Tailwind 使用
+    const cssVars = {
+      '--pos-primary': config.theme === 'dark' ? '34 197 94' : '34 197 94',
+      '--pos-secondary': config.theme === 'dark' ? '30 41 59' : '249 250 251',
+      '--color-background': config.theme === 'dark' ? '15 23 42' : '255 255 255',
+      '--color-foreground': config.theme === 'dark' ? '248 250 252' : '15 23 42',
+    }
+
+    Object.entries(cssVars).forEach(([property, value]) => {
+      root.style.setProperty(property, value)
+    })
+
+  }, [config])
+
+  // 響應系統主題變化
+  useEffect(() => {
+    if (config.theme === 'light' || config.theme === 'dark') {
+      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+      
+      const handleChange = (e: MediaQueryListEvent) => {
+        if (config.theme === 'light' && e.matches) {
+          // 系統變為暗色，但用戶選擇亮色，不自動切換
+        } else if (config.theme === 'dark' && !e.matches) {
+          // 系統變為亮色，但用戶選擇暗色，不自動切換
+        }
+      }
+
+      mediaQuery.addEventListener('change', handleChange)
+      return () => mediaQuery.removeEventListener('change', handleChange)
+    }
+  }, [config.theme])
+
+  const value: UIStyleContextType = {
+    config,
+    updateConfig,
+    setTheme,
+    toggleTheme,
+    resetToDefaults,
+  }
+
+  return (
+    <UIStyleContext.Provider value={value}>
+      {children}
+    </UIStyleContext.Provider>
+  )
+}
+
+// Hook 來使用樣式上下文
+export const useUIStyle = (): UIStyleContextType => {
+  const context = useContext(UIStyleContext)
+  if (context === undefined) {
+    throw new Error('useUIStyle must be used within a UIStyleProvider')
+  }
+  return context
+}
+
+// 輔助函數：獲取當前主題的 CSS 變數
+export const getCSSVariable = (variable: string): string => {
+  return `hsl(var(${variable}))`
+}
+
+// 輔助函數：動態生成 className
+export const getStyleClass = (base: string, variant?: string, size?: string): string => {
+  const classes = [base]
+  if (variant) classes.push(`${base}--${variant}`)
+  if (size) classes.push(`${base}--${size}`)
+  return classes.join(' ')
+}
+
+// 預設的樣式主題配置
+export const styleThemes = {
+  light: {
+    primary: 'hsl(var(--pos-primary))',
+    secondary: 'hsl(var(--pos-secondary))',
+    background: 'hsl(var(--color-background))',
+    foreground: 'hsl(var(--color-foreground))',
+  },
+  dark: {
+    primary: 'hsl(var(--pos-primary))',
+    secondary: 'hsl(var(--pos-secondary))',
+    background: 'hsl(var(--color-background))',
+    foreground: 'hsl(var(--color-foreground))',
+  },
+  'high-contrast': {
+    primary: 'hsl(var(--pos-primary))',
+    secondary: 'hsl(var(--pos-secondary))',
+    background: 'hsl(var(--color-background))',
+    foreground: 'hsl(var(--color-foreground))',
+  },
+} as const

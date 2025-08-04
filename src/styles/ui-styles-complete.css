@@ -1,0 +1,861 @@
+/*
+ * TanaPOS V5 - UI Style System
+ * Version: 2.0 (Complete Edition)
+ * Description: A comprehensive, themeable UI style system for the TanaPOS application.
+ * Themes Included: Modern, Neumorphism, Glassmorphism, Brutalism, Cyberpunk, Skeuomorphism, DOS, BIOS, Kawaii, Code.
+ */
+
+/* ===========================================
+ * :ROOT - Global Base Variables & Resets
+ * =========================================== */
+:root {
+  /* Base typography */
+  --font-size-base: 16px;
+  --line-height-base: 1.6;
+  --font-family-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  --font-family-mono: "Fira Code", "JetBrains Mono", "Source Code Pro", monospace;
+
+  /* Base colors (can be overridden by themes) */
+  --pos-primary: #4f46e5;      /* Indigo */
+  --pos-secondary: #0d9488;    /* Teal */
+  --pos-success: #16a34a;      /* Green */
+  --pos-warning: #facc15;      /* Yellow */
+  --pos-danger: #dc2626;       /* Red */
+  --color-foreground: #111827; /* Dark Gray */
+  --color-background: #ffffff; /* White */
+  --color-border: #d1d5db;     /* Light Gray */
+
+  /* Base geometry */
+  --border-radius-sm: 0.25rem; /* 4px */
+  --border-radius-md: 0.5rem;  /* 8px */
+  --border-radius-lg: 1rem;    /* 16px */
+}
+
+/* A modern CSS reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+/* ===========================================
+ * 1. Modern (現代風格) - Default
+ * =========================================== */
+.ui-style-modern {
+  /* Theme variables */
+  --style-primary: var(--pos-primary);
+  --style-secondary: var(--pos-secondary);
+  --style-text: var(--color-foreground);
+  --style-bg: var(--color-background);
+  --style-surface: #ffffff;
+  --style-border: var(--color-border);
+  --style-radius: var(--border-radius-md);
+  --style-font: var(--font-family-sans);
+}
+
+.ui-style-modern body {
+  background-color: var(--style-bg);
+  color: var(--style-text);
+  font-family: var(--style-font);
+}
+
+.ui-style-modern button {
+  background-color: var(--style-primary);
+  color: white;
+  border: none;
+  border-radius: var(--style-radius);
+  padding: 0.75em 1.5em;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+.ui-style-modern button:hover {
+  background-color: color-mix(in srgb, var(--style-primary) 90%, black);
+}
+.ui-style-modern button:active {
+  transform: scale(0.98);
+}
+
+.ui-style-modern .card {
+  background-color: var(--style-surface);
+  border: 1px solid var(--style-border);
+  border-radius: var(--style-radius);
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+  padding: 1.5rem;
+}
+
+.ui-style-modern input,
+.ui-style-modern select {
+  border: 1px solid var(--style-border);
+  border-radius: var(--style-radius);
+  padding: 0.75em 1em;
+  background-color: var(--style-surface);
+  color: var(--style-text);
+  width: 100%;
+}
+.ui-style-modern input:focus {
+  outline: 2px solid var(--style-primary);
+  outline-offset: 2px;
+  border-color: transparent;
+}
+
+.ui-style-modern .modal-backdrop {
+    background-color: rgba(0,0,0,0.5);
+}
+.ui-style-modern .modal-content {
+    background-color: var(--style-surface);
+    border-radius: var(--border-radius-lg);
+    padding: 2rem;
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
+}
+
+/* ===========================================
+ * 2. Neumorphism (新擬物風格)
+ * =========================================== */
+.ui-style-neumorphism {
+  --style-bg: #e0e5ec;
+  --style-surface: #e0e5ec;
+  --style-primary: #6d5dfc;
+  --style-text: #5a6474;
+  --style-border: #c8d0e7;
+  --style-radius: 20px;
+  --style-font: var(--font-family-sans);
+
+  /* Neumorphism shadows */
+  --shadow-convex: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
+  --shadow-concave: inset 5px 5px 10px #a3b1c6, inset -5px -5px 10px #ffffff;
+  --shadow-pressed: inset 2px 2px 5px #a3b1c6, inset -2px -2px 5px #ffffff;
+}
+
+.ui-style-neumorphism body {
+  background-color: var(--style-bg);
+  color: var(--style-text);
+  font-family: var(--style-font);
+}
+
+.ui-style-neumorphism button {
+  background: var(--style-surface);
+  color: var(--style-text);
+  border: none;
+  border-radius: var(--style-radius);
+  padding: 0.75em 1.5em;
+  cursor: pointer;
+  box-shadow: var(--shadow-convex);
+  transition: all 0.2s ease-in-out;
+}
+.ui-style-neumorphism button:hover {
+  color: var(--style-primary);
+}
+.ui-style-neumorphism button:active {
+  box-shadow: var(--shadow-pressed);
+}
+
+.ui-style-neumorphism .card {
+  background: var(--style-surface);
+  border-radius: var(--style-radius);
+  box-shadow: var(--shadow-convex);
+  padding: 1.5rem;
+}
+
+.ui-style-neumorphism input,
+.ui-style-neumorphism select {
+  background: var(--style-bg);
+  border: none;
+  border-radius: var(--style-radius);
+  padding: 0.75em 1.5em;
+  box-shadow: var(--shadow-concave);
+  color: var(--style-text);
+  width: 100%;
+}
+.ui-style-neumorphism input:focus {
+  outline: none;
+  box-shadow: var(--shadow-pressed), 0 0 0 2px var(--style-primary);
+}
+
+/* ===========================================
+ * 3. Glassmorphism (玻璃質感風格)
+ * =========================================== */
+.ui-style-glassmorphism {
+  --style-bg-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --style-surface: rgba(255, 255, 255, 0.15);
+  --style-primary: rgba(255, 255, 255, 0.25);
+  --style-text: #ffffff;
+  --style-border: rgba(255, 255, 255, 0.2);
+  --style-radius: var(--border-radius-lg);
+  --style-font: var(--font-family-sans);
+}
+
+.ui-style-glassmorphism body {
+  background-image: var(--style-bg-image);
+  background-attachment: fixed;
+  color: var(--style-text);
+  font-family: var(--style-font);
+}
+
+.ui-style-glassmorphism .glass-effect {
+  background: var(--style-surface);
+  border: 1px solid var(--style-border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+  border-radius: var(--style-radius);
+}
+
+.ui-style-glassmorphism button {
+  color: var(--style-text);
+  border: 1px solid var(--style-border);
+  padding: 0.75em 1.5em;
+  cursor: pointer;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+.ui-style-glassmorphism button:hover {
+  background: var(--style-primary);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.3);
+}
+
+.ui-style-glassmorphism .card {
+  padding: 1.5rem;
+}
+
+.ui-style-glassmorphism input,
+.ui-style-glassmorphism select {
+    background: transparent;
+    border: 1px solid var(--style-border);
+    color: var(--style-text);
+    padding: 0.75em 1em;
+    width: 100%;
+}
+.ui-style-glassmorphism input::placeholder {
+    color: rgba(255,255,255,0.6);
+}
+.ui-style-glassmorphism input:focus {
+    outline: none;
+    background: var(--style-primary);
+}
+
+/* Apply glass effect to common components */
+.ui-style-glassmorphism button,
+.ui-style-glassmorphism .card,
+.ui-style-glassmorphism input,
+.ui-style-glassmorphism select,
+.ui-style-glassmorphism .modal-content {
+    background: var(--style-surface);
+    border: 1px solid var(--style-border);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+    border-radius: var(--style-radius);
+}
+
+
+/* ===========================================
+ * 4. Brutalism (極繁主義風格)
+ * =========================================== */
+.ui-style-brutalism {
+  --style-bg: #fdf500;
+  --style-primary: #ff0080;
+  --style-secondary: #00ffff;
+  --style-text: #000000;
+  --style-border: #000000;
+  --style-radius: 0;
+  --style-font: "Arial Black", "Impact", sans-serif;
+}
+
+.ui-style-brutalism body {
+  background: var(--style-bg);
+  color: var(--style-text);
+  font-family: var(--style-font);
+  text-transform: uppercase;
+}
+
+.ui-style-brutalism .brutal-element {
+    border: 3px solid var(--style-border);
+    box-shadow: 5px 5px 0 var(--style-border);
+    background: white;
+    transition: box-shadow 0.1s ease-in-out;
+}
+
+.ui-style-brutalism button {
+  padding: 0.75em 1.5em;
+  cursor: pointer;
+  color: var(--style-text);
+  background: var(--style-primary);
+  border: 3px solid var(--style-border);
+  box-shadow: 5px 5px 0 var(--style-border);
+  transition: all 0.1s ease-in-out;
+}
+.ui-style-brutalism button:hover {
+  background: var(--style-secondary);
+  box-shadow: 8px 8px 0 var(--style-border);
+  transform: translate(-3px, -3px);
+}
+.ui-style-brutalism button:active {
+  box-shadow: 0 0 0 var(--style-border);
+  transform: translate(5px, 5px);
+}
+
+.ui-style-brutalism .card {
+  padding: 1.5rem;
+}
+
+.ui-style-brutalism input,
+.ui-style-brutalism select {
+    padding: 0.75em 1em;
+    width: 100%;
+    color: var(--style-text);
+}
+.ui-style-brutalism input:focus {
+    outline: 3px solid var(--style-primary);
+    outline-offset: 0;
+}
+
+/* Apply brutal effect to common components */
+.ui-style-brutalism button,
+.ui-style-brutalism .card,
+.ui-style-brutalism input,
+.ui-style-brutalism select {
+    border: 3px solid var(--style-border);
+    box-shadow: 5px 5px 0 var(--style-border);
+    background: white;
+}
+
+
+/* ===========================================
+ * 5. Cyberpunk (未來科技風格)
+ * =========================================== */
+.ui-style-cyberpunk {
+  --style-bg: #0a0a0a;
+  --style-primary: #00ffff; /* Cyan */
+  --style-secondary: #ff00ff; /* Magenta */
+  --style-text: #00ff6a; /* Green */
+  --style-border: #00ffff;
+  --style-radius: 0;
+  --style-font: "Orbitron", "Courier New", monospace;
+  --glitch-text-shadow: 
+    -1px -1px 0px var(--style-secondary),
+    1px 1px 0px var(--style-primary);
+}
+
+.ui-style-cyberpunk body {
+  background: var(--style-bg);
+  color: var(--style-text);
+  font-family: var(--style-font);
+  text-shadow: var(--glitch-text-shadow);
+}
+
+.ui-style-cyberpunk .cyber-element {
+    border: 2px solid var(--style-primary);
+    box-shadow: 0 0 10px var(--style-primary), inset 0 0 5px rgba(0,255,255,0.2);
+    background: rgba(0,255,255,0.05);
+    position: relative;
+}
+/* Glitchy corners */
+.ui-style-cyberpunk .cyber-element::before {
+    content: '▘';
+    position: absolute;
+    top: -2px; left: -2px;
+    color: var(--style-secondary);
+}
+.ui-style-cyberpunk .cyber-element::after {
+    content: '▝';
+    position: absolute;
+    bottom: -2px; right: -2px;
+    color: var(--style-secondary);
+}
+
+.ui-style-cyberpunk button {
+  padding: 0.75em 1.5em;
+  cursor: pointer;
+  color: var(--style-primary);
+  background: transparent;
+  text-shadow: 0 0 5px var(--style-primary);
+  transition: all 0.2s ease;
+}
+.ui-style-cyberpunk button:hover {
+  background: var(--style-primary);
+  color: var(--style-bg);
+  box-shadow: 0 0 20px var(--style-primary);
+  text-shadow: none;
+}
+
+.ui-style-cyberpunk .card {
+  padding: 1.5rem;
+}
+
+.ui-style-cyberpunk input,
+.ui-style-cyberpunk select {
+    padding: 0.75em 1em;
+    width: 100%;
+    color: var(--style-text);
+    background: transparent;
+    text-shadow: var(--glitch-text-shadow);
+}
+.ui-style-cyberpunk input:focus {
+    outline: none;
+    box-shadow: 0 0 15px var(--style-secondary), inset 0 0 10px rgba(255,0,255,0.3);
+}
+
+/* Apply cyber effect to common components */
+.ui-style-cyberpunk button,
+.ui-style-cyberpunk .card,
+.ui-style-cyberpunk input,
+.ui-style-cyberpunk select {
+    border: 2px solid var(--style-primary);
+    box-shadow: 0 0 10px var(--style-primary), inset 0 0 5px rgba(0,255,255,0.2);
+    background: rgba(0,255,255,0.05);
+}
+
+/* ===========================================
+ * 6. Skeuomorphism (擬物化風格)
+ * =========================================== */
+.ui-style-skeuomorphism {
+  --style-bg: #f5f5dc; /* Beige */
+  --style-surface: #e6ddd4;
+  --style-primary: #8b4513; /* Brown */
+  --style-secondary: #cd853f; /* Peru */
+  --style-text: #2f1b14;
+  --style-border: #8b4513;
+  --style-radius: 8px;
+  --style-font: "Georgia", "Times New Roman", serif;
+}
+
+.ui-style-skeuomorphism body {
+  background: var(--style-bg);
+  color: var(--style-text);
+  font-family: var(--style-font);
+}
+
+.ui-style-skeuomorphism button {
+  background: linear-gradient(145deg, #d4af87, #8b7355);
+  color: var(--style-text);
+  border: 2px outset var(--style-border);
+  border-radius: var(--style-radius);
+  padding: 0.75em 1.5em;
+  cursor: pointer;
+  box-shadow: 
+    0 2px 4px rgba(0,0,0,0.2),
+    inset 0 1px 0 rgba(255,255,255,0.3);
+  transition: all 0.1s ease;
+}
+.ui-style-skeuomorphism button:hover {
+  background: linear-gradient(145deg, #deb887, #a0826d);
+}
+.ui-style-skeuomorphism button:active {
+  border: 2px inset var(--style-border);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.ui-style-skeuomorphism .card {
+  background: linear-gradient(145deg, var(--style-surface), #d4c5b0);
+  border: 2px outset var(--style-border);
+  border-radius: var(--style-radius);
+  padding: 1.5rem;
+  box-shadow: 
+    0 4px 8px rgba(0,0,0,0.2),
+    inset 0 1px 0 rgba(255,255,255,0.3);
+}
+
+.ui-style-skeuomorphism input,
+.ui-style-skeuomorphism select {
+  background: #fff;
+  border: 2px inset var(--style-border);
+  border-radius: var(--style-radius);
+  padding: 0.75em 1em;
+  color: var(--style-text);
+  width: 100%;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+}
+.ui-style-skeuomorphism input:focus {
+  outline: none;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.2), 0 0 0 2px var(--style-primary);
+}
+
+/* ===========================================
+ * 7. DOS (復古DOS風格)
+ * =========================================== */
+.ui-style-dos {
+  --style-bg: #000080; /* Navy Blue */
+  --style-surface: #c0c0c0; /* Light Gray */
+  --style-primary: #ffffff; /* White */
+  --style-secondary: #ffff00; /* Yellow */
+  --style-text: #ffffff;
+  --style-border: #c0c0c0;
+  --style-radius: 0;
+  --style-font: "MS Sans Serif", "Courier New", monospace;
+}
+
+.ui-style-dos body {
+  background: var(--style-bg);
+  color: var(--style-text);
+  font-family: var(--style-font);
+  font-size: 14px;
+}
+
+.ui-style-dos button {
+  background: var(--style-surface);
+  color: #000000;
+  border: 2px outset var(--style-border);
+  padding: 0.5em 1em;
+  cursor: pointer;
+  font-family: var(--style-font);
+  font-size: 12px;
+  font-weight: bold;
+}
+.ui-style-dos button:hover {
+  background: #e0e0e0;
+}
+.ui-style-dos button:active {
+  border: 2px inset var(--style-border);
+}
+
+.ui-style-dos .card {
+  background: var(--style-surface);
+  border: 2px outset var(--style-border);
+  padding: 1rem;
+  color: #000000;
+}
+
+.ui-style-dos input,
+.ui-style-dos select {
+  background: #ffffff;
+  border: 2px inset var(--style-border);
+  padding: 0.5em;
+  color: #000000;
+  width: 100%;
+  font-family: var(--style-font);
+  font-size: 12px;
+}
+.ui-style-dos input:focus {
+  outline: 1px dotted #000000;
+}
+
+/* ===========================================
+ * 8. BIOS (復古BIOS風格)
+ * =========================================== */
+.ui-style-bios {
+  --style-bg: #000000;
+  --style-surface: #004400; /* Dark Green */
+  --style-primary: #00ff00; /* Lime Green */
+  --style-secondary: #ffff00; /* Yellow */
+  --style-text: #00ff00;
+  --style-border: #00ff00;
+  --style-radius: 0;
+  --style-font: "Courier New", "Lucida Console", monospace;
+}
+
+.ui-style-bios body {
+  background: var(--style-bg);
+  color: var(--style-text);
+  font-family: var(--style-font);
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.ui-style-bios button {
+  background: var(--style-bg);
+  color: var(--style-text);
+  border: 1px solid var(--style-border);
+  padding: 0.5em 1em;
+  cursor: pointer;
+  font-family: var(--style-font);
+  text-transform: uppercase;
+}
+.ui-style-bios button:hover {
+  background: var(--style-surface);
+  color: var(--style-secondary);
+}
+.ui-style-bios button:active {
+  background: var(--style-primary);
+  color: var(--style-bg);
+}
+
+.ui-style-bios .card {
+  background: var(--style-bg);
+  border: 1px solid var(--style-border);
+  padding: 1rem;
+  position: relative;
+}
+.ui-style-bios .card::before {
+  content: '■';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  color: var(--style-secondary);
+}
+
+.ui-style-bios input,
+.ui-style-bios select {
+  background: var(--style-bg);
+  border: 1px solid var(--style-border);
+  padding: 0.5em;
+  color: var(--style-text);
+  width: 100%;
+  font-family: var(--style-font);
+}
+.ui-style-bios input:focus {
+  outline: none;
+  background: var(--style-surface);
+  color: var(--style-secondary);
+}
+
+/* ===========================================
+ * 9. Kawaii (可愛風格)
+ * =========================================== */
+.ui-style-kawaii {
+  --style-bg: #ffb3d9; /* Pink */
+  --style-surface: #ffe6f2;
+  --style-primary: #ff69b4; /* Hot Pink */
+  --style-secondary: #ffc0cb; /* Light Pink */
+  --style-text: #8b008b; /* Dark Magenta */
+  --style-border: #ff69b4;
+  --style-radius: 25px;
+  --style-font: "Comic Sans MS", "Chalkboard", cursive;
+}
+
+.ui-style-kawaii body {
+  background: linear-gradient(45deg, var(--style-bg) 0%, var(--style-surface) 100%);
+  color: var(--style-text);
+  font-family: var(--style-font);
+}
+
+.ui-style-kawaii button {
+  background: linear-gradient(145deg, var(--style-primary), var(--style-secondary));
+  color: white;
+  border: none;
+  border-radius: var(--style-radius);
+  padding: 0.75em 1.5em;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(255,105,180,0.3);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.ui-style-kawaii button::before {
+  content: '✨';
+  position: absolute;
+  top: 50%;
+  left: -20px;
+  transform: translateY(-50%);
+  transition: left 0.3s ease;
+}
+.ui-style-kawaii button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(255,105,180,0.4);
+}
+.ui-style-kawaii button:hover::before {
+  left: calc(100% + 5px);
+}
+
+.ui-style-kawaii .card {
+  background: var(--style-surface);
+  border: 3px solid var(--style-border);
+  border-radius: var(--style-radius);
+  padding: 1.5rem;
+  box-shadow: 0 8px 25px rgba(255,105,180,0.2);
+  position: relative;
+}
+.ui-style-kawaii .card::after {
+  content: '💕';
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 1.2em;
+}
+
+.ui-style-kawaii input,
+.ui-style-kawaii select {
+  background: #fff;
+  border: 2px solid var(--style-border);
+  border-radius: var(--style-radius);
+  padding: 0.75em 1em;
+  color: var(--style-text);
+  width: 100%;
+  box-shadow: inset 0 2px 5px rgba(255,105,180,0.1);
+}
+.ui-style-kawaii input:focus {
+  outline: none;
+  border-color: var(--style-primary);
+  box-shadow: 0 0 0 3px rgba(255,105,180,0.2);
+}
+
+/* ===========================================
+ * 10. Code (程式碼編輯器風格)
+ * =========================================== */
+.ui-style-code {
+  --style-bg: #1e1e1e; /* VS Code Dark */
+  --style-surface: #2d2d30;
+  --style-primary: #007acc; /* VS Code Blue */
+  --style-secondary: #4ec9b0; /* Teal */
+  --style-text: #d4d4d4; /* Light Gray */
+  --style-border: #3e3e42;
+  --style-radius: 4px;
+  --style-font: var(--font-family-mono);
+}
+
+.ui-style-code body {
+  background: var(--style-bg);
+  color: var(--style-text);
+  font-family: var(--style-font);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.ui-style-code button {
+  background: var(--style-surface);
+  color: var(--style-text);
+  border: 1px solid var(--style-border);
+  border-radius: var(--style-radius);
+  padding: 0.5em 1em;
+  cursor: pointer;
+  font-family: var(--style-font);
+  transition: all 0.2s ease;
+}
+.ui-style-code button:hover {
+  background: var(--style-primary);
+  color: white;
+  border-color: var(--style-primary);
+}
+.ui-style-code button:active {
+  background: color-mix(in srgb, var(--style-primary) 80%, black);
+}
+
+.ui-style-code .card {
+  background: var(--style-surface);
+  border: 1px solid var(--style-border);
+  border-radius: var(--style-radius);
+  padding: 1rem;
+  position: relative;
+}
+.ui-style-code .card::before {
+  content: '// Component';
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  font-size: 0.8em;
+  color: #6a9955; /* Comment Green */
+  font-style: italic;
+}
+
+.ui-style-code input,
+.ui-style-code select {
+  background: var(--style-bg);
+  border: 1px solid var(--style-border);
+  border-radius: var(--style-radius);
+  padding: 0.5em;
+  color: var(--style-text);
+  width: 100%;
+  font-family: var(--style-font);
+}
+.ui-style-code input:focus {
+  outline: none;
+  border-color: var(--style-primary);
+  box-shadow: 0 0 0 1px var(--style-primary);
+}
+
+/* ===========================================
+ * GENERAL UTILITY & HELPER CLASSES
+ * =========================================== */
+
+/* Style transition helper */
+.ui-style-transition,
+.ui-style-transition * {
+  transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* Style load-in animation */
+@keyframes styleLoadIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+[class*="ui-style-"] {
+  animation: styleLoadIn 0.5s ease-out forwards;
+}
+
+/* Kawaii sparkle animation */
+@keyframes kawaiiBounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.ui-style-kawaii button:active {
+  animation: kawaiiBounce 0.3s ease;
+}
+
+/* Cyberpunk glitch animation */
+@keyframes cyberGlitch {
+  0% { text-shadow: var(--glitch-text-shadow); }
+  25% { text-shadow: 2px 0 var(--style-secondary), -2px 0 var(--style-primary); }
+  50% { text-shadow: -1px 0 var(--style-secondary), 1px 0 var(--style-primary); }
+  75% { text-shadow: 1px 0 var(--style-secondary), -1px 0 var(--style-primary); }
+  100% { text-shadow: var(--glitch-text-shadow); }
+}
+
+.ui-style-cyberpunk button:focus {
+  animation: cyberGlitch 0.5s infinite;
+}
+
+/* Code syntax highlighting effect */
+@keyframes codeGlow {
+  0%, 100% { box-shadow: 0 0 0 1px var(--style-primary); }
+  50% { box-shadow: 0 0 0 2px var(--style-primary), 0 0 10px var(--style-primary); }
+}
+
+.ui-style-code button:focus {
+  animation: codeGlow 2s infinite;
+}
+
+/* ===========================================
+ * ACCESSIBILITY & RESPONSIVE
+ * =========================================== */
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* High contrast support */
+@media (prefers-contrast: more) {
+  :root {
+    --color-border: #000000;
+  }
+  .ui-style-glassmorphism {
+    --style-border: #ffffff;
+  }
+  .ui-style-neumorphism {
+    --shadow-convex: 5px 5px 0px #999, -5px -5px 0px #fff;
+    --shadow-concave: inset 5px 5px 0px #999, inset -5px -5px 0px #fff;
+  }
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+  .ui-style-brutalism button:hover {
+    transform: none; /* Remove hover transforms on mobile */
+  }
+  
+  .ui-style-kawaii button:hover {
+    transform: scale(1.02); /* Reduce animation intensity */
+  }
+  
+  .ui-style-neumorphism {
+    --style-radius: 15px; /* Reduce radius on smaller screens */
+  }
+  
+  .ui-style-kawaii {
+    --style-radius: 20px;
+  }
+}
